@@ -18,12 +18,12 @@
     "extra": {
         "dux": [
             {
-                "source": "src/app",
+                "source": "app",
                 "target": "app",
                 "ignore": false
             },
             {
-                "source": "src/config",
+                "source": "config",
                 "target": "config",
                 "ignore": true
             }
