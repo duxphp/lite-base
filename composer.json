@@ -4,9 +4,6 @@
     "type": "dux-app",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Duxphp\\LiteBase\\": "src/"
-        }
     },
     "authors": [
         {
