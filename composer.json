@@ -15,7 +15,6 @@
         }
     ],
     "require": {
-        "duxphp/lite": "dev-main",
         "xantios/mimey": "^2.2",
         "swow/swow": "^1.1"
     },
