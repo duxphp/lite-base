@@ -1,6 +1,6 @@
 <?php
 
-namespace app\System\Service;
+namespace App\System\Service;
 
 use Dux\Validator\Data;
 use Interop\Queue\Processor;

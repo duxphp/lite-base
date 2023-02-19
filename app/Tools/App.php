@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace app\Tools;
+namespace App\Tools;
 
-use app\Tools\Config\Menu;
-use app\Tools\Config\Route;
+use App\Tools\Config\Menu;
+use App\Tools\Config\Route;
 
 /**
  * Application Registration

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\System\Models;
+namespace App\System\Models;
 
 use Dux\App;
 use Dux\Database\Attribute\AutoMigrate;

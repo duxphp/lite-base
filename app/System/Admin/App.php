@@ -1,8 +1,8 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Event\AppEvent;
+use App\System\Event\AppEvent;
 use Dux\Validator\Data;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

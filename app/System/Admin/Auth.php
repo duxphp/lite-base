@@ -1,9 +1,9 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\SystemUser;
-use app\System\Models\LogLogin;
+use App\System\Models\SystemUser;
+use App\System\Models\LogLogin;
 use donatj\UserAgent\UserAgentParser;
 use Dux\App;
 use Dux\Handlers\ExceptionBusiness;

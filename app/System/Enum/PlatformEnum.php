@@ -1,6 +1,6 @@
 <?php
 
-namespace app\System\Enum;
+namespace App\System\Enum;
 
 enum PlatformEnum: string {
     // web

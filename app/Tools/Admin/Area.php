@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace app\Tools\Admin;
+namespace App\Tools\Admin;
 
-use app\Tools\Models\ToolsArea;
+use App\Tools\Models\ToolsArea;
 use Dux\App;
 use Dux\Manage\Manage;
 use Dux\Utils\Excel;

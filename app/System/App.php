@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace app\System;
+namespace App\System;
 
-use app\System\Config\Menu;
-use app\System\Config\Permission;
-use app\System\Config\Route;
-use app\System\Event\AppEvent;
-use app\System\Middleware\ApiMiddleware;
-use app\System\Middleware\OperateMiddleware;
-use app\System\Models\SystemUser;
+use App\System\Config\Menu;
+use App\System\Config\Permission;
+use App\System\Config\Route;
+use App\System\Event\AppEvent;
+use App\System\Middleware\ApiMiddleware;
+use App\System\Middleware\OperateMiddleware;
+use App\System\Models\SystemUser;
 use Dux\App\AppExtend;
 use Dux\Auth\AuthMiddleware;
 use Dux\Bootstrap;

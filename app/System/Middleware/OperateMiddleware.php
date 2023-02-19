@@ -1,9 +1,9 @@
 <?php
 
-namespace app\System\Middleware;
+namespace App\System\Middleware;
 
-use app\System\App;
-use app\System\Models\LogOperate;
+use App\System\App;
+use App\System\Models\LogOperate;
 use donatj\UserAgent\UserAgentParser;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

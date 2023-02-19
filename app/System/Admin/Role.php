@@ -1,8 +1,8 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\SystemRole;
+use App\System\Models\SystemRole;
 use Dux\App;
 use Dux\Manage\Manage;
 

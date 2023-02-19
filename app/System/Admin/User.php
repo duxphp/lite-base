@@ -1,15 +1,16 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\LogOperate;
-use app\System\Models\SystemDepart;
-use app\System\Models\SystemRole;
-use app\System\Models\SystemUser;
-use app\System\Models\LogLogin;
+use App\System\Models\LogOperate;
+use App\System\Models\SystemDepart;
+use App\System\Models\SystemRole;
+use App\System\Models\SystemUser;
+use App\System\Models\LogLogin;
 use Dux\App;
 use Dux\Handlers\ExceptionBusiness;
 use Dux\Manage\Manage;
+use Dux\Validator\Data;
 use Dux\Validator\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Psr\Http\Message\ResponseInterface;
@@ -82,7 +83,7 @@ class User extends Manage {
     public function infoAssign($info): array {
         return [
             "roles" => SystemRole::query()->get(["name", "id"])->toArray(),
-            "departs" => SystemDepart::childrenAll()->toArray(),
+            "departs" => SystemDepart::get()->toTree(),
         ];
     }
 
@@ -114,7 +115,7 @@ class User extends Manage {
         return $saveData;
     }
 
-    public function saveAfter($info, object $data) {
+    public function saveAfter(Data $data, $info) {
         $info->roles()->sync($data->roles ?: []);
         $info->departs()->sync($data->departs ?: []);
         $info->leaders()->sync($data->leaders ?: []);

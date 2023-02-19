@@ -1,8 +1,8 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\SystemDepart;
+use App\System\Models\SystemDepart;
 use Dux\App;
 use Dux\Manage\Manage;
 
@@ -19,7 +19,7 @@ class Depart extends Manage {
         return [
             "info" => [
                 "id" => $info->id,
-                "parent" => $this->coverLevel($info->parent_id),
+                "parent" => $info->ancestors->pluck('id'),
                 "name" => $info->name,
             ]
         ];

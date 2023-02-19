@@ -1,9 +1,9 @@
 <?php
 
-namespace app\System\Middleware;
+namespace App\System\Middleware;
 
-use app\System\App;
-use app\System\Models\LogApi;
+use App\System\App;
+use App\System\Models\LogApi;
 use Illuminate\Support\Facades\DB;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

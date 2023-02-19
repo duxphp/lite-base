@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\SystemApi;
+use App\System\Models\SystemApi;
 use Dux\Manage\Manage;
 use Dux\Validator\Data;
 

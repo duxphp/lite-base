@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\System\Service;
+namespace App\System\Service;
 
 use DI\DependencyException;
 use DI\NotFoundException;

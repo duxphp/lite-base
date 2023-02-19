@@ -1,25 +1,23 @@
 <?php
 
-namespace app\System\Models;
+namespace App\System\Models;
 
 use Dux\Database\Attribute\AutoMigrate;
 use Dux\Database\Model;
-use Dux\Database\TreeTrait;
 use Illuminate\Database\Schema\Blueprint;
+use Kalnoy\Nestedset\NestedSet;
+use Kalnoy\Nestedset\NodeTrait;
 
 #[AutoMigrate]
 class SystemDepart extends Model {
 
-    use TreeTrait;
-
     public $table = "system_depart";
 
-    public array $treeFields = ["id", "parent_id", "name"];
-
+    use NodeTrait;
     public function migration(Blueprint $table) {
         $table->id();
-        $table->integer('parent_id')->nullable();
         $table->string('name');
+        NestedSet::columns($table);
         $table->timestamps();
     }
 

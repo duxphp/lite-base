@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\Tools\Models;
+namespace App\Tools\Models;
 
 use Dux\Database\Attribute\AutoMigrate;
 

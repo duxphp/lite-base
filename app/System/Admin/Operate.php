@@ -1,9 +1,9 @@
 <?php
 
-namespace app\System\Admin;
+namespace App\System\Admin;
 
-use app\System\Models\LogOperate;
-use app\System\Models\SystemUser;
+use App\System\Models\LogOperate;
+use App\System\Models\SystemUser;
 use Dux\App;
 use Dux\Manage\Manage;
 use Illuminate\Database\Eloquent\Builder;

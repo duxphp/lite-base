@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\System\Models;
+namespace App\System\Models;
 
 use Dux\App;
 use Dux\Database\Attribute\AutoMigrate;

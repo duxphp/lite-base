@@ -1,8 +1,8 @@
 <?php
 
-namespace app\System\Middleware;
+namespace App\System\Middleware;
 
-use app\System\Models\SystemApi;
+use App\System\Models\SystemApi;
 use Dux\Handlers\ExceptionBusiness;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

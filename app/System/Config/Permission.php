@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\System\Config;
+namespace App\System\Config;
 
 class Permission
 {
@@ -18,6 +18,6 @@ class Permission
 		$group = $permission->group("操作日志", "system.operate");
 		$group->add("list", "列表");
 
-		$group = $permission->manage("", "system.api");
+		$group = $permission->manage("接口授权", "system.api");
 	}
 }

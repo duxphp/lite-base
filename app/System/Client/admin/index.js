@@ -2,7 +2,7 @@ import { lazy } from 'react'
 
 const route = {
   total: {
-    index: lazy(() => import('./home')),
+    index: lazy(() => import('./home/index')),
     app: lazy(() => import('./home/app')),
   },
   user: {

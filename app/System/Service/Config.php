@@ -1,12 +1,12 @@
 <?php
 
-namespace app\System\Service;
+namespace App\System\Service;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class Config {
 
-    private static string $model = \app\System\Models\Config::class;
+    private static string $model = \App\System\Models\Config::class;
     private static ?array $config = null;
 
     public static function getValue(string $name, mixed $default = null): array|string|null {

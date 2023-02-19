@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace app\Tools\Config;
-use app\System\Admin\Auth;
-use app\System\Admin\Depart;
-use app\System\Admin\User;
+namespace App\Tools\Config;
+use App\System\Admin\Auth;
+use App\System\Admin\Depart;
+use App\System\Admin\User;
 use Dux\App;
 use Dux\Route\Route;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\Tools\Admin;
+namespace App\Tools\Admin;
 
-use app\Tools\Models\ToolsFile;
-use app\Tools\Models\ToolsFileDir;
+use App\Tools\Models\ToolsFile;
+use App\Tools\Models\ToolsFileDir;
 use Dux\App;
 use Dux\Handlers\ExceptionBusiness;
 use Psr\Http\Message\ResponseInterface;
