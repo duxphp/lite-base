@@ -1,0 +1,7 @@
+type: default
+ext: []
+drivers:
+  default:
+    type: local
+    public_url: http://dux-lite.test/uploads/
+    path: public/uploads

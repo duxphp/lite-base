@@ -1,0 +1,36 @@
+{
+    "name": "duxphp/lite-base",
+    "description": "duxlite base src/app",
+    "type": "dux-app",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Duxphp\\LiteBase\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "duxphp",
+            "email": "admin@duxphp.com"
+        }
+    ],
+    "require": {
+        "duxphp/lite": "dev-main",
+        "xantios/mimey": "^2.2",
+        "swow/swow": "^1.1"
+    },
+    "extra": {
+        "dux": [
+            {
+                "source": "src/app",
+                "target": "app",
+                "ignore": false
+            },
+            {
+                "source": "src/config",
+                "target": "config",
+                "ignore": true
+            }
+        ]
+    }
+}
