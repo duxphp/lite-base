@@ -1,13 +1,18 @@
 <?php
 
 namespace App\System\Service;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class Config {
 
     private static string $model = \App\System\Models\Config::class;
     private static ?array $config = null;
+
+    public static function getJsonValue(string $name, mixed $default = null) {
+        $value = self::getValue($name);
+        if (is_null($value)) return $default;
+        return json_decode($value, true);
+    }
 
     public static function getValue(string $name, mixed $default = null): array|string|null {
         $config = self::getConfig();

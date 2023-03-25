@@ -7,12 +7,14 @@ use App\System\Config\Menu;
 use App\System\Config\Permission;
 use App\System\Config\Route;
 use App\System\Event\AppEvent;
-use App\System\Middleware\ApiMiddleware;
 use App\System\Middleware\OperateMiddleware;
+use App\System\Models\SystemApi;
 use App\System\Models\SystemUser;
+use Dux\Api\ApiMiddleware;
 use Dux\App\AppExtend;
 use Dux\Auth\AuthMiddleware;
 use Dux\Bootstrap;
+use Dux\Handlers\ExceptionBusiness;
 use Dux\Menu\Menu as DuxMenu;
 use Dux\Permission\Permission as DuxPermission;
 use Dux\Permission\PermissionMiddleware;
@@ -27,18 +29,23 @@ class App extends AppExtend {
 
     public function init(Bootstrap $app): void {
         // 初始化路由
-        $app->getRoute()->set("web", new DuxRoute("", "web端"));
-        $app->getRoute()->set("admin", new DuxRoute("/admin", "管理端"));
+        $app->getRoute()->set("web", new DuxRoute(""));
+        $app->getRoute()->set("admin", new DuxRoute("/admin"));
         $app->getRoute()->set("adminAuth",
-            new DuxRoute("/admin", "管理端授权",
+            new DuxRoute("/admin", "",
                 new OperateMiddleware(SystemUser::class),
                 new PermissionMiddleware("admin", SystemUser::class),
                 new AuthMiddleware("admin")
             )
         );
         $app->getRoute()->set("api",
-            new DuxRoute("/api", "接口端",
-                new ApiMiddleware()
+            new DuxRoute("/api", "",
+                new ApiMiddleware(function ($id) {
+                    $apiInfo = SystemApi::query()->where('secret_id', $id)->firstOr(function () {
+                        throw new ExceptionBusiness('Signature authorization failed', 402);
+                    });
+                    return $apiInfo->secret_key;
+                })
             ),
         );
         // 初始化权限

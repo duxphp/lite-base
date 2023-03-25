@@ -7,27 +7,20 @@ namespace App\Tools\Admin;
 use App\Tools\Models\ToolsArea;
 use Dux\App;
 use Dux\Manage\Manage;
+use Dux\Route\Attribute\Route;
+use Dux\Route\Attribute\RouteManage;
 use Dux\Utils\Excel;
-use Dux\Validator\Data;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+#[RouteManage(app: 'adminAuth', title: '地区', pattern: '/tools/area', name: 'tools.area', ways: ['list'], permission: 'admin')]
 class Area extends Manage
 {
     protected string $model = ToolsArea::class;
     protected string $name = '地区数据';
 
-
-    protected function listFormat(object $item): array
-    {
-        return [
-            "id" => $item->id,
-            "code" => $item->code,
-            "name" => $item->name,
-            "level" => $item->level,
-        ];
-    }
-
+    #[Route(methods: 'POST', title: '导入', pattern: '/import')]
     public function import(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
@@ -92,13 +85,14 @@ class Area extends Manage
                 App::db()->getConnection()->table('tools_area')->insert(array_values($vo));
             }
             App::db()->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             App::db()->getConnection()->rollBack();
             throw $e;
         }
         return send($response, "导入成功");
     }
 
+    #[Route(methods: 'GET', title: '地区选择', pattern: '/cascade')]
     public function cascade(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $params = $request->getQueryParams();
@@ -111,6 +105,16 @@ class Area extends Manage
             'list' => $data,
         ]);
 
+    }
+
+    protected function listFormat(object $item): array
+    {
+        return [
+            "id" => $item->id,
+            "code" => $item->code,
+            "name" => $item->name,
+            "level" => $item->level,
+        ];
     }
 
 }

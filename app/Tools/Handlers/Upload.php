@@ -1,17 +1,26 @@
 <?php
 
-namespace App\Tools\Admin;
+namespace App\Tools\Handlers;
+
+ini_set('max_execution_time', 600);
 
 use App\Tools\Models\ToolsFile;
 use App\Tools\Models\ToolsFileDir;
 use Dux\App;
 use Dux\Handlers\ExceptionBusiness;
+use Mimey\MimeTypes;
+use Overtrue\Flysystem\Qiniu\QiniuAdapter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-class Upload {
-    public function handler(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+class Upload
+{
+
+    private string $hasType = '';
+
+    public function upload(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
         /**
          * @var $uploads UploadedFileInterface[]
          */
@@ -19,7 +28,7 @@ class Upload {
         $uploads = $request->getUploadedFiles();
         $app = $request->getAttribute('app');
         $list = [];
-        $mimes = new \Mimey\MimeTypes;
+        $mimes = new MimeTypes;
         $type = App::config("storage")->get("type");
         $ext = App::config("storage")->get("ext", []);
         foreach ($uploads as $key => $vo) {
@@ -63,9 +72,22 @@ class Upload {
         ]);
     }
 
-    private string $hasType = '';
+    public function qiniu(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $config = App::config("storage")->get('drivers.default');
+        $adapter = new QiniuAdapter($config["accessKey"], $config["secretKey"], $config["bucket"], $config["domain"]);
+        $token = $adapter->getAuthManager()->uploadToken($config["bucket"]);
+        return send($response, 'ok', [
+            'token' => $token,
+            'bucket' => $config["bucket"],
+            'domain' => $config["domain"],
+            'public_url' => $config["public_url"],
+        ]);
+    }
 
-    public function manage(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+    public function manage(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
         $this->hasType = $request->getAttribute('app');
         $query = $request->getQueryParams();
         $type = $query['type'];
@@ -92,6 +114,14 @@ class Upload {
         }
 
         return send($response, 'ok', $data);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getFolder()
+    {
+        return ToolsFileDir::query()->where('has_type', $this->hasType)->get()->toArray();
     }
 
     private function getFile($dirId, $query = '', $filter = 'all'): array
@@ -172,11 +202,23 @@ class Upload {
     }
 
     /**
-     * @return mixed
+     * @param $ids
+     * @return array
      */
-    private function getFolder()
+    private function deleteFile($ids): array
     {
-        return ToolsFileDir::query()->where('has_type', $this->hasType)->get()->toArray();
+        $ids = array_filter(explode(',', $ids));
+        if (empty($ids)) {
+            trigger_error('请选择删除文件');
+        }
+        $files = ToolsFile::query()->where('has_type', $this->hasType)->whereIn('id', $ids)->get([
+            'driver', 'path'
+        ]);
+        $files->map(function ($vo) {
+            App::storage($vo->driver)->delete($vo->path);
+        });
+        ToolsFile::query()->whereIn('id', $ids)->delete();
+        return [];
     }
 
     /**
@@ -215,26 +257,6 @@ class Upload {
         });
         ToolsFile::query()->where('dir_id', $id)->delete();
         ToolsFileDir::query()->where('id', $id)->delete();
-        return [];
-    }
-
-    /**
-     * @param $ids
-     * @return array
-     */
-    private function deleteFile($ids): array
-    {
-        $ids = array_filter(explode(',', $ids));
-        if (empty($ids)) {
-            trigger_error('请选择删除文件');
-        }
-        $files = ToolsFile::query()->where('has_type', $this->hasType)->whereIn('id', $ids)->get([
-            'driver', 'path'
-        ]);
-        $files->map(function ($vo) {
-            App::storage($vo->driver)->delete($vo->path);
-        });
-        ToolsFile::query()->whereIn('id', $ids)->delete();
         return [];
     }
 }

@@ -56,6 +56,9 @@ class SystemUser extends Model {
     public function getPermissionAttribute(): array {
         $data = [];
         foreach ($this->roles as $item) {
+            if (!$item->permission) {
+                continue;
+            }
             $data = [...$data, ...$item->permission];
         }
         return array_filter($data);

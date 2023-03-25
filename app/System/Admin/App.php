@@ -13,6 +13,7 @@ class App
         $list = [];
 
         $event = new AppEvent();
+        // NOTE system.app
         \Dux\App::event()->dispatch($event, 'system.app');
 
         return send($response, 'ok', [

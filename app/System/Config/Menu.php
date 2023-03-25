@@ -2,23 +2,20 @@
 declare(strict_types=1);
 
 namespace App\System\Config;
-use App\System\Admin\Auth;
-use App\System\Admin\Depart;
-use App\System\Admin\User;
-use Dux\App;
-use Dux\Route\Route;
-use PDO;
 
-class Menu {
-    static function Admin(\Dux\Menu\Menu $menu): void {
+use Dux\App;
+
+class Menu
+{
+    static function Admin(\Dux\Menu\Menu $menu): void
+    {
 
         $app = $menu->add("home", [
-            "name" => "首页",
+            "name" => "概况",
             "icon" => "i-heroicons:home",
             "order" => 0,
+            'url' => "system/total/index"
         ]);
-        $group = $app->group("概况");
-        $group->item("系统概况", "system/total/index", 0);
 
 
         $app = $menu->add("system", [
