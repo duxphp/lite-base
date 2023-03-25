@@ -107,7 +107,7 @@ class User extends Manage {
         $saveData = [
             "nickname" => $data->nickname,
             "username" => $data->username,
-            "leader" => $data->leader,
+            "leader" => (bool) $data->leader,
         ];
         if(!$id || $data->password) {
             $saveData["password"] = password_hash($data->password, PASSWORD_BCRYPT);
