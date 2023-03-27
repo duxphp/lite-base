@@ -25,8 +25,7 @@ class Auth
             throw new ExceptionBusiness("账号或密码错误");
         }
 
-        $this->loginCheck((int) $info->id);
-
+        $this->loginCheck((int)$info->id);
 
         $useragent = $request->getHeader("user-agent")[0];
         $parser = new UserAgentParser();
@@ -44,6 +43,13 @@ class Auth
             $loginModel->create($logData);
             throw new ExceptionBusiness("账号或密码错误");
         }
+
+        $vaptcha = App::config('client')->get('vaptcha');
+        if ($vaptcha) {
+            $vaptchaConfig = $data->vaptcha;
+            \Dux\Vaptcha\Vaptcha::Verify($vaptchaConfig['server'], $vaptchaConfig['token']);
+        }
+
         $logData['status'] = true;
         $loginModel->create($logData);
 
