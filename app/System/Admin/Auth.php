@@ -44,7 +44,7 @@ class Auth
             throw new ExceptionBusiness("账号或密码错误");
         }
 
-        $vaptcha = App::config('client')->get('vaptcha');
+        $vaptcha = App::config('use')->get('vaptcha.key');
         if ($vaptcha) {
             $vaptchaConfig = $data->vaptcha;
             \Dux\Vaptcha\Vaptcha::Verify($vaptchaConfig['server'], $vaptchaConfig['token']);
