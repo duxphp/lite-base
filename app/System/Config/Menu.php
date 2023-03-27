@@ -14,7 +14,8 @@ class Menu
             "name" => "概况",
             "icon" => "i-heroicons:home",
             "order" => 0,
-            'url' => "system/total/index"
+            'url' => "system/total/index",
+            'auth' => 'home.total'
         ]);
 
 
