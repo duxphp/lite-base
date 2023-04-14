@@ -2,12 +2,13 @@
 
 namespace App\System\Admin;
 
-use App\System\Models\SystemUser;
 use App\System\Models\LogLogin;
+use App\System\Models\SystemUser;
 use donatj\UserAgent\UserAgentParser;
 use Dux\App;
 use Dux\Handlers\ExceptionBusiness;
 use Dux\Validator\Validator;
+use Dux\Vaptcha\Vaptcha;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -47,7 +48,7 @@ class Auth
         $vaptcha = App::config('use')->get('vaptcha.key');
         if ($vaptcha) {
             $vaptchaConfig = $data->vaptcha;
-            \Dux\Vaptcha\Vaptcha::Verify($vaptchaConfig['server'], $vaptchaConfig['token']);
+            Vaptcha::Verify($vaptchaConfig['server'], $vaptchaConfig['token']);
         }
 
         $logData['status'] = true;
@@ -79,14 +80,14 @@ class Auth
 
     private function loginCheck(int $id): void
     {
-        $loginList = LogLogin::query()->where('user_type', SystemUser::class)->where('user_id', $id)->orderByDesc('id')->where('status', false)->limit(3)->get();
-        $loginLast = $loginList->first();
+        $loginList = LogLogin::query()->where('user_type', SystemUser::class)->where('user_id', $id)->orderByDesc('id')->limit(3)->get();
         $loginStatus = 0;
         foreach ($loginList as $vo) {
             if (!$vo->status) {
                 $loginStatus++;
             }
         }
+        $loginLast = $loginList->first();
         $time = now();
         if ($loginStatus >= 3 && $loginLast->created_at->addSeconds(60)->gt($time)) {
             throw new ExceptionBusiness("三次登录密码错误，等待一分钟");
