@@ -20,6 +20,9 @@ class App extends AppExtend
 
     public function register(Bootstrap $app): void
     {
+
+        require_once(__DIR__ . '/Func/Common.php');
+
         // 注册菜单
         Menu::Admin($app->getMenu()->get("admin"));
 
