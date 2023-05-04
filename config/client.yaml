@@ -1,0 +1,14 @@
+login:
+  admin:
+    title: 管理平台
+    desc: 欢迎登录管理平台
+    copyright: Copyright © 2023 DuxWeb
+    side:
+      title: 帮助您的企业快速增长业务
+      desc: 为您打造量身打造的快捷、高效、安全的后台管理系统
+notify:
+  admin:
+    disabled: true
+
+vaptcha:
+
