@@ -11,6 +11,7 @@ use Dux\Route\Attribute\Route;
 use Dux\Route\Attribute\RouteManage;
 use Dux\Utils\Excel;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -105,6 +106,28 @@ class Area extends Manage
             'list' => $data,
         ]);
 
+    }
+
+    public function listWhere(Builder $query, array $args, ServerRequestInterface $request): Builder
+    {
+        $query->orderByDesc('id');
+
+        $params = $request->getQueryParams();
+        $level = $params["level"];
+        $name = $params['name'];
+
+        if ($level) {
+            $query->where('level', $level);
+
+        }
+        if($name){
+            $area = ToolsArea::query()->where('name', $name)->first();
+            $query->where('parent_code', $area->code);
+        }
+
+
+
+        return $query;
     }
 
     protected function listFormat(object $item): array
