@@ -15,7 +15,7 @@ class Menu
             "icon" => "i-heroicons:home",
             "order" => 0,
             'url' => "system/total/index",
-            'auth' => 'home.total'
+            'auth' => 'home.total.index'
         ]);
 
 

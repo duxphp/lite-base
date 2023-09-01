@@ -80,14 +80,14 @@ class Auth
 
     private function loginCheck(int $id): void
     {
-        $loginList = LogLogin::query()->where('user_type', SystemUser::class)->where('user_id', $id)->orderByDesc('id')->limit(3)->get();
-        $loginStatus = 0;
-        foreach ($loginList as $vo) {
-            if (!$vo->status) {
-                $loginStatus++;
-            }
-        }
+        $lasSeconds = now()->subSeconds(60);
+        $loginList = LogLogin::query()->where('user_type', SystemUser::class)->where([
+            'user_id' => $id,
+            'status' => false,
+            ['created_at', '>=', $lasSeconds->toDateTimeString()]
+        ])->orderByDesc('id')->limit(3)->get();
         $loginLast = $loginList->first();
+        $loginStatus = $loginList->count();
         $time = now();
         if ($loginStatus >= 3 && $loginLast->created_at->addSeconds(60)->gt($time)) {
             throw new ExceptionBusiness("三次登录密码错误，等待一分钟");

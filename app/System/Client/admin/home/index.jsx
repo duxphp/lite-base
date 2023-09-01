@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { MediaImageText, Page, request, StatsChart, Table, ObjectManage, notify, user } from 'duxweb'
-import { Trigger, List, Link } from '@arco-design/web-react'
+import React, {useEffect, useState} from 'react'
+import {MediaImageText, notify, ObjectManage, Page, request, StatsChart, Table} from 'duxweb'
+import {Link, List, Trigger} from '@arco-design/web-react'
 import moment from 'moment'
 
 class DownloadManage extends ObjectManage {
@@ -135,7 +135,7 @@ export default function Home() {
         <div className='grid gap-2 grid-cols-1 xl:grid-cols-2'>
           <div className='p-4 rounded shadow-sm text-color-2 border border-color-2 bg-color-1'>
             <div className='flex gap-4 items-center mb-4'>
-              <div className='text-color-1 text-title-1 font-bold'>商品销售额</div>
+              <div className='text-color-1 text-title-1 font-bold'>本月商品销售额</div>
             </div>
             <Table url='mall/stats/goodsRank'
               width='auto'
@@ -170,11 +170,11 @@ export default function Home() {
               ]}
               tableProps={{
                 pagination: false
-              }} />
+              }}/>
           </div>
           <div className='p-4 rounded shadow-sm text-color-2 border border-color-2 bg-color-1'>
             <div className='flex gap-4 items-center mb-4'>
-              <div className='text-color-1 text-title-1 font-bold'>用户消费额</div>
+              <div className='text-color-1 text-title-1 font-bold'>本月用户消费额</div>
             </div>
             <Table url='mall/stats/userRank'
               width='auto'

@@ -2,7 +2,10 @@
 
 namespace App\System\Enum;
 
-enum PlatformEnum: string {
+use Dux\App;
+
+enum PlatformEnum: string
+{
     // web
     case WEB = 'web';
     // wap
@@ -14,7 +17,8 @@ enum PlatformEnum: string {
     // 微信小程序
     case WEAPP = 'weapp';
 
-    public function name(): string {
+    public function name(): string
+    {
         return match ($this) {
             self::WEB => '电脑端',
             self::WAP => 'H5手机端',
@@ -25,11 +29,27 @@ enum PlatformEnum: string {
     }
 
 
-    public static function list(): array {
+    public static function list(): array
+    {
         return array_map(
             fn(PlatformEnum $item) => $item->value,
             PlatformEnum::cases()
         );
     }
+
+    /**
+     * 请求地址
+     * @return string|null
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function url(): ?string
+    {
+        return match ($this) {
+            self::WEB, self::WAP, self::APP, self::WECHAT => App::config('use')->get('domain.web'),
+            default => null
+        };
+    }
+
 
 }

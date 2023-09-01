@@ -14,6 +14,17 @@ class Config {
         return json_decode($value, true);
     }
 
+    public static function getIntValue(string $name): int
+    {
+        $value = self::getValue($name);
+        return intval($value);
+    }
+
+    public static function getDecimalValue(string $name, int $decimals = 2) {
+        $value = self::getValue($name);
+        return bc_format($value, $decimals);
+    }
+
     public static function getValue(string $name, mixed $default = null): array|string|null {
         $config = self::getConfig();
         if (str_contains($name, '*')) {
