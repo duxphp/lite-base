@@ -21,7 +21,7 @@ class Area extends Manage
     protected string $model = ToolsArea::class;
     protected string $name = '地区数据';
 
-    #[Route(methods: 'POST', title: '导入', pattern: '/import')]
+    #[Route(methods: 'POST', title: '导入', pattern: '')]
     public function import(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
 
@@ -77,11 +77,13 @@ class Area extends Manage
             }
         }
         $list = array_chunk(collect(array_values($newData))->sortBy('code')->toArray(), 1000);
+
+        App::db()->getConnection()->statement('SET FOREIGN_KEY_CHECKS = 0');
+        App::db()->getConnection()->table('tools_area')->truncate();
+        App::db()->getConnection()->statement('SET FOREIGN_KEY_CHECKS = 1');
+        
         App::db()->getConnection()->beginTransaction();
         try {
-            App::db()->getConnection()->statement('SET FOREIGN_KEY_CHECKS = 0');
-            App::db()->getConnection()->table('tools_area')->truncate();
-            App::db()->getConnection()->statement('SET FOREIGN_KEY_CHECKS = 1');
             foreach ($list as $vo) {
                 App::db()->getConnection()->table('tools_area')->insert(array_values($vo));
             }
